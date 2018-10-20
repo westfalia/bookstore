@@ -2,13 +2,16 @@ package app;
 
 import data.Book;
 import data.Library;
+import data.Magazine;
 import utils.DataReader;
 
 public class LibraryControl {
     //zmienne do kontrolowania programu
-    public final int exit = 0;
-    public final int addBook = 1;
-    public final int printBooks = 2;
+    public static final int EXIT = 0;
+    public static final int ADD_BOOK = 1;
+    public static final int ADD_MAGAZINE = 2;
+    public static final int PRINT_BOOKS = 3;
+    public static final int PRINT_MAGAZINES = 4;
 
     //zmienna do komunikacji z uzytkownikiem
     private DataReader dataReader;
@@ -26,13 +29,17 @@ public class LibraryControl {
     public void controlLoop(){
         int option;
         printOptions();
-        while((option = dataReader.getInt()) != exit){
+        while((option = dataReader.getInt()) != EXIT){
             switch (option){
-                case addBook:
+                case ADD_BOOK:
                     addBook();
                     break;
-                case printBooks:
+                case ADD_MAGAZINE:
+                    addMagazine();
+                case PRINT_BOOKS:
                     printBooks();
+                case PRINT_MAGAZINES:
+                    printMagazines();
                     break;
                 default:
                     System.out.println("There is no option, enter again.");
@@ -45,9 +52,11 @@ public class LibraryControl {
 
     private void printOptions() {
         System.out.println("Choose an option: ");
-        System.out.println("0 - exit");
-        System.out.println("1 - add book");
-        System.out.println("2 - show available books");
+        System.out.println(EXIT + " - exit");
+        System.out.println(ADD_BOOK + " - add book");
+        System.out.println(ADD_MAGAZINE + " - add magazine");
+        System.out.println(PRINT_BOOKS + " - show available books");
+        System.out.println(PRINT_MAGAZINES + " - show available magazines");
     }
 
     private void addBook(){
@@ -57,5 +66,14 @@ public class LibraryControl {
 
     private void printBooks(){
         library.printBooks();
+    }
+
+    private void addMagazine(){
+        Magazine magazine = dataReader.readAndCreateMagazine();
+        library.addMagazine(magazine);
+    }
+
+    private void printMagazines() {
+        library.printMagazines();
     }
 }
