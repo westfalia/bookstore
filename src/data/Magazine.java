@@ -1,7 +1,5 @@
 package data;
 
-import sun.nio.cs.ext.MacArabic;
-
 public class Magazine extends Publication {
     private int month;
     private int day;

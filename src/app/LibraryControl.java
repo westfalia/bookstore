@@ -29,8 +29,10 @@ public class LibraryControl {
                     break;
                 case ADD_MAGAZINE:
                     addMagazine();
+                    break;
                 case PRINT_BOOKS:
                     printBooks();
+                    break;
                 case PRINT_MAGAZINES:
                     printMagazines();
                     break;
