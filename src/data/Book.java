@@ -40,17 +40,21 @@ public class Book extends Publication {
         this.setIsbn(isbn);
     }
 
-    public void printInfo() {
-        String info = getTitle() + "; " + getAuthor() + "; " + getYear() + "; " + getPages()
-                + "; " + getPublisher() + "; " + getIsbn();
-        System.out.println(info);
-    }
-
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
-        return getTitle() + "; " + getAuthor() + "; " + getYear() + "; " + getPages()
-                + "; " + getPublisher() + "; " + getIsbn();
+        StringBuilder print = new StringBuilder(32);
+        print.append(getTitle());
+        print.append("; ");
+        print.append(getAuthor());
+        print.append("; ");
+        print.append(getYear());
+        print.append("; ");
+        print.append(getPages());
+        print.append("; ");
+        print.append(getPublisher());
+        print.append("; ");
+        print.append(getIsbn());
+        return print.toString();
     }
 
     @Override
