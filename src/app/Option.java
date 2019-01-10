@@ -1,5 +1,7 @@
 package app;
 
+import java.util.NoSuchElementException;
+
 public enum Option {
     EXIT(0, "exit program"),
     ADD_BOOK(1, "add book"),
@@ -35,7 +37,13 @@ public enum Option {
     public String toString() {
         return value + " - " + description;
     }
-     public static Option createFromInt(int option) {
-        return Option.values()[option];
+     public static Option createFromInt(int option) throws NoSuchElementException {
+        Option result = null;
+        try {
+            result = Option.values()[option];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new NoSuchElementException("No item of this ID.");
+        }
+        return result;
      }
 }
