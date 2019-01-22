@@ -4,6 +4,7 @@ public class Magazine extends Publication {
     private int month;
     private int day;
     private String language;
+    private static final long serialVersionUID = -1817453159056345121L;
 
     public int getMonth() {
         return month;

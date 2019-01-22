@@ -1,10 +1,11 @@
 package app;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 
-
 import utils.DataReader;
+import utils.FileManager;
 import utils.LibraryUtils;
 import data.Book;
 import data.Library;
@@ -13,13 +14,21 @@ import data.Magazine;
 public class LibraryControl {
     // zmienna do komunikacji z użytkownikiem
     private DataReader dataReader;
+    private FileManager fileManager;
 
     // "biblioteka" przechowująca dane
     private Library library;
 
     public LibraryControl() {
         dataReader = new DataReader();
-        library = new Library();
+        fileManager = new FileManager();
+        try {
+            library = fileManager.readLibraryFromFile();
+            System.out.println("Wczytano dane biblioteki z pliku ");
+        } catch (ClassNotFoundException | IOException e) {
+            library = new Library();
+            System.out.println("Utworzono nową bazę biblioteki.");
+        }
     }
 
     /*
@@ -45,7 +54,7 @@ public class LibraryControl {
                         printMagazines();
                         break;
                     case EXIT:
-                        ;
+                        exit();
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Wprowadzono niepoprawne dane, publikacji nie dodano");
@@ -82,23 +91,19 @@ public class LibraryControl {
         LibraryUtils.printMagazines(library);
     }
 
-    public enum Option {
-        EXIT(0, "exit program"),
-        ADD_BOOK(1, "add book"),
-        ADD_MAGAZINE(2, "add magazine"),
-        PRINT_BOOKS(3, "show available books"),
-        PRINT_MAGAZINES(4, "show available magazines");
+    private void exit() {
+        fileManager.writeLibraryToFile(library);
+    }
+
+    private enum Option {
+        EXIT(0, "Wyjście z programu"),
+        ADD_BOOK(1, "Dodanie książki"),
+        ADD_MAGAZINE(2,"Dodanie magazynu/gazety"),
+        PRINT_BOOKS(3, "Wyświetlenie dostępnych książek"),
+        PRINT_MAGAZINES(4, "Wyświetlenie dostępnych magazynów/gazet");
 
         private int value;
         private String description;
-
-        public int getValue() {
-            return value;
-        }
-
-        public String getDescription() {
-            return description;
-        }
 
         Option(int value, String desc) {
             this.value = value;
@@ -109,13 +114,15 @@ public class LibraryControl {
         public String toString() {
             return value + " - " + description;
         }
+
         public static Option createFromInt(int option) throws NoSuchElementException {
             Option result = null;
             try {
                 result = Option.values()[option];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                throw new NoSuchElementException("No item of this ID.");
+            } catch(ArrayIndexOutOfBoundsException e) {
+                throw new NoSuchElementException("Brak elementu o wskazanym ID");
             }
+
             return result;
         }
     }

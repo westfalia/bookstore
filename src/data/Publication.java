@@ -1,9 +1,12 @@
 package data;
 
-public class Publication {
+import java.io.Serializable;
+
+public abstract class Publication implements Serializable {
     private int year;
     private String title;
     private String publisher;
+    private static final long serialVersionUID = -2462904134492275130L;
 
     public int getYear() {
         return year;

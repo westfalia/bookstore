@@ -5,6 +5,7 @@ public class Book extends Publication {
     private String author;
     private int pages;
     private String isbn;
+    private static final long serialVersionUID = 3005753452804149155L;
 
     // settery i gettery
     public String getIsbn() {
